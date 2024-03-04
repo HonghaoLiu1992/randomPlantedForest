@@ -92,6 +92,9 @@ Split RandomPlantedForest::calcOptimalSplit(const std::vector<std::vector<double
       break;
     if (split_candidates[n] >= 0 && (size_t)split_candidates[n] >= possible_splits.size())
       continue;
+      
+      double constraint;
+      constraint = 0
 
     auto candidate = possible_splits.begin();
     std::advance(candidate, split_candidates[n]); // get random split candidate without replacement
@@ -217,8 +220,16 @@ Split RandomPlantedForest::calcOptimalSplit(const std::vector<std::vector<double
           // accumulate squared mean and get mean
           L2_loss(curr_split);
 
+          // Check monotonicity constraints
+          bool is_monotonic = true;
+          if (constraint > 0 && curr_split.M_s>curr_split.M_b) {
+            is_monotonic = false;
+          } else if (constraint < 0 && curr_split.M_s<curr_split.M_b){
+            is_monotonic = false;
+          }
+
           // update split if squared sum is smaller
-          if (curr_split.min_sum < min_split.min_sum)
+          if (is_monotonic && curr_split.min_sum < min_split.min_sum)
           {
             min_split = curr_split;
             min_split.tree_index = curr_tree;

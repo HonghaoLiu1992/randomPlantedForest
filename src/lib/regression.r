@@ -14,8 +14,8 @@ sim <- function(N){
 # RPF
 trainDat <- sim(1000)
 
-plot(trainDat$x3, trainDat$y)
-plot(trainDat$x3, trainDat$x1)
+#plot(trainDat$x3, trainDat$y)
+#plot(trainDat$x3, trainDat$x1)
 
 rpfit <- rpf(y ~ x1 + x2 + x3, data = trainDat,
              ntrees = 50,
